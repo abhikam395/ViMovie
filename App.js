@@ -1,112 +1,82 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
+import 'react-native-gesture-handler';
 import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Text, View, StatusBar, StyleSheet} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+const Tab = createMaterialBottomTabNavigator();
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import HomeScreen from './src/screens/HomeScreen';
+import MoviesScreen from './src/screens/MoviesScreen';
+import NewsScreen from './src/screens/NewsScreen';
+import TvScreen from './src/screens/TvScreen';
+import PremiumScreen from './src/screens/PremiumScreen';
 
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Foundation from 'react-native-vector-icons/Foundation';
+
+
+export default function App(){
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+    <NavigationContainer>
+      <Tab.Navigator
+          activeColor="red"
+          inactiveColor="white"
+          shifting={false}
+          barStyle={{
+            backgroundColor: '#212121', 
+            height: 65,
+            justifyContent: 'center'
           }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+        <Tab.Screen 
+          name="Home" 
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({color, focused}) => (
+              <Ionicons name="home" color={focused ? "red" : "white"} size={18}/>
+            ),
+          }}/>
+        <Tab.Screen 
+          name="Movies" 
+          component={MoviesScreen}
+          options={{
+            tabBarIcon: ({color, focused}) => (
+              <MaterialIcons name="local-movies" color={focused ? "red" : "white"} size={18}/>
+            ),
+          }}/>
+        <Tab.Screen 
+          name="Premium" 
+          component={PremiumScreen}
+          options={{
+            tabBarIcon: ({color, focused}) => (
+              <View style={{height: 65, backgroundColor: 'red', position: 'absolute', top: -30}}>
+                <Foundation name="sheriff-badge" color={focused ? "red" : "white"} size={18}/>
+              </View>
+            ),
+          }}/>
+        <Tab.Screen 
+          name="News" 
+          component={NewsScreen}
+          options={{
+            tabBarIcon: ({color, focused}) => (
+              <Ionicons name="newspaper" color={focused ? "red" : "white"} size={18}/>
+            ),
+          }}/>
+        <Tab.Screen 
+          name="TV" 
+          component={TvScreen}
+          options={{
+            tabBarIcon: ({color, focused}) => (
+              <Ionicons name="tv" color={focused ? "red" : "white"} size={18}/>
+            ),
+          }}/>
+      </Tab.Navigator>
+    </NavigationContainer>
+  )
+}
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+  container: {
+    flex: 1
+  }
+})
